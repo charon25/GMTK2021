@@ -130,7 +130,7 @@ class Game:
         self.add_bond(atom, self.bonding.atom)
         self.bonding.disable()
         
-        self.sounds.play_sound(co.SOUND_BOND)
+        self.sounds.play_random_sound(co.SOUND_BOND)
 
         if not atom.hasAvailableBonds() and not self.bonding.atom.hasAvailableBonds():
             molecule = Molecule.create_molecule(atom)
@@ -150,7 +150,7 @@ class Game:
         if self.electron_cooldown <= 0:
             self.offset = self.screen_shake(2 * bonds_count)
         if self.state == co.GameState.TUTO:
-            self.sounds.play_sound(co.SOUND_MOLECULE)  
+            self.sounds.play_random_sound(co.SOUND_MOLECULE)  
             return
 
         self.score += bonds_count * self.multiplier
@@ -161,9 +161,9 @@ class Game:
 
         if not molecule.formula in self.discovered_molecules:
             self.discover_molecule(molecule)
-            self.sounds.play_sound(co.SOUND_MOLECULE_NEW)
+            self.sounds.play_random_sound(co.SOUND_MOLECULE_NEW)
         else:
-            self.sounds.play_sound(co.SOUND_MOLECULE)            
+            self.sounds.play_random_sound(co.SOUND_MOLECULE)            
 
     def discover_molecule(self, molecule: Molecule):
         self.discovered_molecules.append(molecule.formula)
@@ -188,7 +188,7 @@ class Game:
         
         mouse_x, mouse_y = data['pos']
         if co.MENU_BTN_X <= mouse_x <= co.MENU_BTN_X + co.MENU_BTN_SIZE and co.MENU_BTN_Y <= mouse_y <= co.MENU_BTN_Y + co.MENU_BTN_SIZE:
-            self.sounds.play_sound(co.SOUND_CLICK)
+            self.sounds.play_random_sound(co.SOUND_CLICK)
             self.start(restart=True, tuto=True)
 
     def click_game(self, data):
@@ -200,12 +200,12 @@ class Game:
         mouse_x, mouse_y = data['pos']
 
         if co.RESTART_BTN_POS_X <= mouse_x <= co.RESTART_BTN_POS_Y + co.RESTART_BTN_SIZE and co.RESTART_BTN_POS_Y <= mouse_y <= co.RESTART_BTN_POS_X + co.RESTART_BTN_SIZE:
-            self.sounds.play_sound(co.SOUND_CLICK)
+            self.sounds.play_random_sound(co.SOUND_CLICK)
             self.start(restart=True, tuto=(self.state == co.GameState.TUTO))
         
         if self.tutorial.show_go_btn:
             if co.TUTO_FRAME3_BTN_X <= mouse_x <= co.TUTO_FRAME3_BTN_X + co.TUTO_FRAME3_BTN_WIDTH and co.TUTO_FRAME3_BTN_Y <= mouse_y <= co.TUTO_FRAME3_BTN_Y + co.TUTO_FRAME3_BTN_HEIGHT:
-                self.sounds.play_sound(co.SOUND_CLICK)
+                self.sounds.play_random_sound(co.SOUND_CLICK)
                 self.start(restart=True, tuto=False)
 
         for atom in self.atoms:
@@ -229,7 +229,7 @@ class Game:
         self.atom_spawn_multiplier = co.ELECTRON_MULTIPLIER
         self.atom_spawn_cooldown *= co.ELECTRON_MULTIPLIER
         self.offset = self.screen_shake_electron()
-        self.sounds.play_sound(co.SOUND_ELECTRON)
+        self.sounds.play_random_sound(co.SOUND_ELECTRON)
         self.atoms.remove(electron)
 
     def mousemove_game(self, data):
@@ -378,7 +378,7 @@ class Game:
         for formula in co.MOLECULE_NAMES:
             if not formula in self.discovered_molecules:
                 self.hint = formula
-                self.sounds.play_sound(co.SOUND_HINT)
+                self.sounds.play_random_sound(co.SOUND_HINT)
                 return
 
 
