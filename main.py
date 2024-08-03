@@ -1,18 +1,25 @@
+import asyncio
+
 import pygame
 import pyghelper
 
-pygame.init()
-pygame.display.init()
-screen = pyghelper.Window.create(width=700, height=700, title='GMTK 2021', icon_path='resources/icon.png')
 
-from game import Game
+async def main():
+    pygame.init()
+    pygame.display.init()
+    screen = pyghelper.Window.create(width=700, height=700, title='GMTK 2021', icon_path='resources/icon.png')
 
-pygame.init()
+    from game import Game
 
-game = Game(screen)
-game.start()
+    pygame.init()
 
-while not game.is_ended:
-    game.loop()
+    game = Game(screen)
+    game.start()
 
-game.stop()
+    while not game.is_ended:
+        game.loop()
+        await asyncio.sleep(0)
+
+    game.stop()
+
+asyncio.run(main())
